@@ -42,4 +42,14 @@ class User extends Authenticatable
       'password' => 'hashed',
     ];
   }
+
+  public function jobs()
+  {
+    return $this->hasMany(TechJob::class, 'employer_id');
+  }
+
+  public function appliedJobs()
+  {
+    return $this->belongsToMany(TechJob::class, 'job_applications', 'user_id', 'tech_job_id');
+  }
 }

@@ -24,7 +24,6 @@ class AuthController extends Controller
     };
 
     try {
-
       $user = User::create([
         'name' => $request->name,
         'email' => $request->email,
@@ -58,8 +57,6 @@ class AuthController extends Controller
     };
 
     $credentials = $request->only('email', 'password');
-
-    // dd($credentials);
 
     if(! auth()->attempt($credentials)){
       return response()->json([
