@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\JobResource;
 use App\Models\TechJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -14,7 +15,7 @@ class TechJobController extends Controller
    */
   public function index()
   {
-    return TechJob::with('employer')->latest()->get();
+    return JobResource::collection(TechJob::with('employer')->get());
   }
 
   /**
@@ -94,7 +95,7 @@ class TechJobController extends Controller
   public function destroy(Request $request, TechJob $id)
   {
     $job = $id;
-    
+
     if (! $request->user()->can('delete', $job)) {
       abort(403, 'User does not have the permission to perform this action');
     }
