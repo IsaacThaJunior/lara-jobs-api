@@ -37,7 +37,8 @@ class TechJobPolicy
    */
   public function update(User $user, TechJob $techJob): bool
   {
-    return false;
+
+    return $user->role === 'employer' && $user->id === $techJob->employer_id;
   }
 
   /**
@@ -45,7 +46,7 @@ class TechJobPolicy
    */
   public function delete(User $user, TechJob $techJob): bool
   {
-    return false;
+    return $user->role === 'employer' && $user->id === $techJob->employer_id;
   }
 
   /**

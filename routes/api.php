@@ -14,7 +14,10 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
   Route::post('/logout', [AuthController::class, 'logout']);
-  Route::post('/jobs', [TechJobController::class, 'addNewJob']);
+  Route::post('/jobs', [TechJobController::class, 'store']);
+  Route::patch('/jobs/{id}', [TechJobController::class, 'update']);
+  Route::delete('/jobs/{id}', [TechJobController::class, 'destroy']);
 });
 
 Route::get('/jobs', [TechJobController::class, 'index']);
+Route::get('/jobs/{id}', [TechJobController::class, 'show']);

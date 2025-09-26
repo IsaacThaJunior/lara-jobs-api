@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -58,7 +59,7 @@ class AuthController extends Controller
 
     $credentials = $request->only('email', 'password');
 
-    if(! auth()->attempt($credentials)){
+    if (! Auth::attempt($credentials)) {
       return response()->json([
         'message' => 'Invalid Credentials'
       ], 401);
@@ -71,7 +72,6 @@ class AuthController extends Controller
       'access_token' => $token,
       'user' => $user
     ], 200);
-
   }
 
   public function logout(Request $request)
@@ -82,5 +82,3 @@ class AuthController extends Controller
     ], 200);
   }
 }
-
-
