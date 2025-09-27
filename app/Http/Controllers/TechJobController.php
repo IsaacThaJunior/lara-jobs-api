@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Filters\EmployerFilter;
+use App\Http\Filters\LocationFilter;
+use App\Http\Filters\TypeFilter;
 use App\Http\Resources\JobResource;
+use App\Http\Traits\AppliesFilters;
 use App\Models\TechJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -10,13 +14,27 @@ use Illuminate\Validation\Rule;
 
 class TechJobController extends Controller
 {
+  use AppliesFilters;
   /**
    * Display a listing of the resource.
    */
-  public function index()
+  public function index(Request $request)
   {
-    return JobResource::collection(TechJob::with('employer')->get());
+    // Start with the base query, eagerly loading the employer relationship
+    $query = TechJob::with('employer');
+
+    // Apply filters
+    $query = $this->applyFilters($query, $request, [
+      'location' => LocationFilter::class,
+      'type' => TypeFilter::class,
+      'employer_id' => EmployerFilter::class,
+    ]);
+
+    // Execute the query and return the resource collection
+    return JobResource::collection($query->latest()->paginate());
   }
+
+
 
   /**
    * Store a newly created resource in storage.
