@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\TechJobController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -17,6 +18,9 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::post('/jobs', [TechJobController::class, 'store']);
   Route::patch('/jobs/{id}', [TechJobController::class, 'update']);
   Route::delete('/jobs/{id}', [TechJobController::class, 'destroy']);
+
+  Route::post('/jobs/{id}/apply', [JobApplicationController::class, 'store']);
+  Route::get('/user/applications', [JobApplicationController::class, 'show']);
 });
 
 Route::get('/jobs', [TechJobController::class, 'index']);

@@ -22,22 +22,4 @@ class TechJob extends Model
   {
     return $this->belongsToMany(User::class, 'job_applications', 'tech_job_id', 'user_id');
   }
-
-  /**
-   * Scope a query to filter by a specific employer ID.
-   */
-  public function scopeEmployer(Builder $query, $employerId): void
-  {
-    $query->where('employer_id', $employerId);
-  }
-
-  public function scopeLocation(Builder $query, $location): void
-  {
-    $query->where('location', $location);
-  }
-
-  public function scopeType(Builder $query, $type): void
-  {
-    $query->where('type', $type);
-  }
 }

@@ -20,7 +20,6 @@ class TechJobController extends Controller
    */
   public function index(Request $request)
   {
-    // Start with the base query, eagerly loading the employer relationship
     $query = TechJob::with('employer');
 
     // Apply filters
@@ -30,7 +29,6 @@ class TechJobController extends Controller
       'employer_id' => EmployerFilter::class,
     ]);
 
-    // Execute the query and return the resource collection
     return JobResource::collection($query->latest()->paginate());
   }
 
@@ -114,7 +112,7 @@ class TechJobController extends Controller
   {
     $job = $id;
 
-    if (! $request->user()->can('delete', $job)) {
+    if ($request->user()->cannot('delete', $job)) {
       abort(403, 'User does not have the permission to perform this action');
     }
 
