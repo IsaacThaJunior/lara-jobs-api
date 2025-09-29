@@ -47,6 +47,9 @@ class JobApplicationController extends Controller
    */
   public function show(Request $request)
   {
+    if ($request->user()->cannot('apply', TechJob::class)) {
+      abort(403, 'User Isnt a Job Seeker');
+    }
     // Get all the jobs that the user has applied for
     $jobs = $request->user()->appliedJobs()->paginate();
 

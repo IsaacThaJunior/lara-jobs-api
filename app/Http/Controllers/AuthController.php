@@ -38,7 +38,7 @@ class AuthController extends Controller
       return response()->json([
         'access_token' => $token,
         'user' => $user
-      ], 200);
+      ], 201);
     } catch (\Exception $exception) {
       return response()->json([
         'message' => $exception->getMessage()

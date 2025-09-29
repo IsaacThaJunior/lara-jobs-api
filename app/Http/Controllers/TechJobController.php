@@ -29,7 +29,7 @@ class TechJobController extends Controller
       'employer_id' => EmployerFilter::class,
     ]);
 
-    return JobResource::collection($query->latest()->paginate());
+    return JobResource::collection($query->latest()->paginate(3));
   }
 
 
@@ -47,7 +47,7 @@ class TechJobController extends Controller
       'title' => ['required', 'string'],
       'description' => ['required', 'string',],
       'location' => ['required', 'string'],
-      'type' => ['required', Rule::in(['full-time', 'part-time', 'contract', 'freelance'])],
+      'type' => ['required', Rule::in(['full-time', 'part-time', 'contract', 'freelance', 'fulltime', 'parttime',])],
       'salary_min' => ['required', 'string'],
       'salary_max' => ['required', 'string'],
     ]);
@@ -74,7 +74,7 @@ class TechJobController extends Controller
    */
   public function show(TechJob $id)
   {
-    return $id;
+    return new JobResource($id);
   }
 
   /**
@@ -94,7 +94,7 @@ class TechJobController extends Controller
       'title' => ['sometimes', 'string'],
       'description' => ['sometimes', 'string',],
       'location' => ['sometimes', 'string'],
-      'type' => ['sometimes', Rule::in(['full-time', 'part-time', 'contract', 'freelance'])],
+      'type' => ['sometimes', Rule::in(['full-time', 'part-time', 'contract', 'freelance', 'fulltime', 'parttime',])],
       'salary_min' => ['sometimes', 'string'],
       'salary_max' => ['sometimes', 'string'],
     ]);
@@ -118,6 +118,6 @@ class TechJobController extends Controller
 
     $job->delete();
 
-    return response()->json(['message' => 'Job deleted successfully'], 200);
+    return response()->json(['message' => 'Job deleted successfully'], 204);
   }
 }

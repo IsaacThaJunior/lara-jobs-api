@@ -19,7 +19,7 @@ class TechJobPolicy
   /**
    * Determine whether the user can view the model.
    */
-  public function apply(User $user, TechJob $techJob): bool
+  public function apply(User $user,): bool
   {
     return $user->role === 'job_seeker';
   }
