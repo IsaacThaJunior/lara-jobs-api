@@ -11,9 +11,9 @@ class TechJobPolicy
   /**
    * Determine whether the user can view any models.
    */
-  public function viewAny(User $user): bool
+  public function view(User $user): bool
   {
-    return false;
+    return $user->role === 'employer';
   }
 
   /**
